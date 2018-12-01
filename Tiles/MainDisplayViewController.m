@@ -21,8 +21,8 @@
 }
 
 -(void)createTiles{
- 
-    float startX = 100;
+    _animationSpeed = 0.2;
+    float startX = 50;
     float startY = 100;
     float width = 50;
     float height = 50;
@@ -38,7 +38,7 @@
     _arrButtons = [[NSMutableArray alloc] init];
     
     
-    for (int x=1; x<6; x++) {
+    for (int x=1; x<9; x++) {
         if (x<3) {
             xPosition = startX;
             yPosition = startY * x;
@@ -46,11 +46,17 @@
             row = x;
         }
         
-        if (x>2) {
+        if (x>2 && x<6) {
             xPosition = startX + 100;
             yPosition = startY * (x-2);
             column = 2;
             row = x-2;
+        }
+        if (x>5) {
+            xPosition = startX + 200;
+            yPosition = startY * (x-5);
+            column = 3;
+            row = x-5;
         }
         
     index = [[NSString stringWithFormat:@"%li%li",row,column] integerValue];
@@ -60,7 +66,8 @@
     [self.view addSubview:_testTile];
         
     [_arrButtons addObject:_testTile];
-    [_testTile addTarget:self action:@selector(adjustButtons:) forControlEvents:UIControlEventTouchUpInside];
+  //  [_testTile addTarget:self action:@selector(adjustButtons:) forControlEvents:UIControlEventTouchUpInside];
+     [_testTile addTarget:self action:@selector(adjustButtons:) forControlEvents:UIControlEventTouchDown];
         
     }
     //[self createUpArray];
@@ -77,7 +84,6 @@
     tileRowK = floor(sender.tag/10);
     tileColumnK = sender.tag - tileRowK*10;
     
-    NSLog(@"The clicked row is %li vs free %li and clicked column in %li vs free %li",tileRowK,_freeSpaceRow,tileColumnK,_freeSpaceColumn);
     
     if (_freeSpaceColumn<tileColumnK && _freeSpaceRow==tileRowK) {
         actionNumber =1;
@@ -100,7 +106,7 @@
     }
     
     //create array based on actions
-    NSLog(@"Action number is %li",actionNumber);
+
     switch (actionNumber) {
         case 1:
             [self moveLeft:tileRowK column:tileColumnK];
@@ -110,7 +116,6 @@
             break;
         case 3:
             [self moveUp:tileRowK column:tileColumnK];
-            NSLog(@"Move Up From Here");
             break;
         case 4:
             [self moveDown:tileRowK column:tileColumnK];
@@ -131,8 +136,7 @@
     
 
 -(void)moveDown: (NSInteger)rowK column:(NSInteger)columnK {
- //   NSLog(@"The column is %li and the freeSpace Column is %li",columnK,_freeSpaceColumn);
-  //  NSLog(@"The row is %li and the freeSpace row is %li",rowK,_freeSpaceRow);
+ 
     NSInteger tileRow;
     NSInteger tileColumn;
     
@@ -152,9 +156,9 @@
         }
         
         }
-//    NSLog(@"There are %li buttons in array",_arrAboveFreeButtons.count);
+ 
     
-    [UIView animateWithDuration:1 animations:^{
+    [UIView animateWithDuration:_animationSpeed animations:^{
         for (Tiles *activeTile in self.arrAboveFreeButtons) {
             activeTile.frame = CGRectMake(activeTile.frame.origin.x, activeTile.frame.origin.y+100, 50, 50);
             
@@ -167,7 +171,7 @@
     _freeSpaceRow = rowK;
     _freeSpaceColumn = columnK;
     
-   NSLog(@"The free space is %li,%li",rowK,columnK);
+   NSLog(@"Moved Down. The free space is %li,%li",rowK,columnK);
     
 }
 
@@ -192,9 +196,9 @@
         }
         
     }
-    //    NSLog(@"There are %li buttons in array",_arrAboveFreeButtons.count);
+   
     
-    [UIView animateWithDuration:1 animations:^{
+    [UIView animateWithDuration:_animationSpeed animations:^{
         for (Tiles *activeTile in self.arrBelowFreeButtons) {
             activeTile.frame = CGRectMake(activeTile.frame.origin.x, activeTile.frame.origin.y-100, 50, 50);
             
@@ -207,7 +211,7 @@
     _freeSpaceRow = rowK;
     _freeSpaceColumn = columnK;
     
-    NSLog(@"The free space is %li,%li",rowK,columnK);
+    NSLog(@"Moved up. The free space is %li,%li",rowK,columnK);
     
 }
 
@@ -219,22 +223,23 @@
     _arrRightFreeButtons = [[NSMutableArray alloc] init];
     
     
-    for (Tiles *downTiles in _arrButtons) {
+    for (Tiles *leftTiles in _arrButtons) {
         
-        tileRow = floor(downTiles.tag/10);
-        tileColumn = downTiles.tag - tileRow*10;
+        tileRow = floor(leftTiles.tag/10);
+        tileColumn = leftTiles.tag - tileRow*10;
         NSInteger newTag;
         
-        if (rowK  == _freeSpaceRow && columnK > _freeSpaceColumn && rowK == tileRow && columnK >= tileColumn && tileRow == _freeSpaceRow) {
-            [_arrRightFreeButtons addObject:downTiles];
+        if (rowK  == _freeSpaceRow && columnK > _freeSpaceColumn && rowK == tileRow && columnK >= tileColumn && tileRow == _freeSpaceRow && tileColumn>_freeSpaceColumn) {
+            [_arrRightFreeButtons addObject:leftTiles];
             newTag = tileRow*10+tileColumn-1;
-            downTiles.tag = newTag;
+            leftTiles.tag = newTag;
+            NSLog(@"The new tag is %li",newTag);
         }
-        
-    }
-    //    NSLog(@"There are %li buttons in array",_arrAboveFreeButtons.count);
     
-    [UIView animateWithDuration:1 animations:^{
+    }
+    
+    
+    [UIView animateWithDuration:_animationSpeed animations:^{
         for (Tiles *activeTile in self.arrRightFreeButtons) {
             activeTile.frame = CGRectMake(activeTile.frame.origin.x-100, activeTile.frame.origin.y, 50, 50);
             
@@ -247,7 +252,7 @@
     _freeSpaceRow = rowK;
     _freeSpaceColumn = columnK;
     
-  
+    NSLog(@"Moved Left. The free space is %li,%li",_freeSpaceRow,_freeSpaceColumn);
     
 }
 
@@ -265,16 +270,15 @@
         tileColumn = downTiles.tag - tileRow*10;
         NSInteger newTag;
         
-        if (rowK  == _freeSpaceRow && columnK < _freeSpaceColumn && rowK == tileRow && columnK <= tileColumn && tileRow == _freeSpaceRow) {
+        if (rowK  == _freeSpaceRow && columnK < _freeSpaceColumn && rowK == tileRow && columnK <= tileColumn && tileRow == _freeSpaceRow && tileColumn < _freeSpaceColumn) {
             [_arrLeftFreeButtons addObject:downTiles];
             newTag = tileRow*10+tileColumn+1;
             downTiles.tag = newTag;
         }
         
     }
-    //    NSLog(@"There are %li buttons in array",_arrAboveFreeButtons.count);
     
-    [UIView animateWithDuration:1 animations:^{
+    [UIView animateWithDuration:_animationSpeed animations:^{
         for (Tiles *activeTile in self.arrLeftFreeButtons) {
             activeTile.frame = CGRectMake(activeTile.frame.origin.x+100, activeTile.frame.origin.y, 50, 50);
             
@@ -286,7 +290,7 @@
     
     _freeSpaceRow = rowK;
     _freeSpaceColumn = columnK;
-    
+    NSLog(@"Moved Right. The free space is %li,%li",rowK,columnK);
     
     
 }

@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSMutableArray *arrRightFreeButtons;
 @property (strong, nonatomic) NSMutableArray *arrLeftFreeButtons;
 
+@property float animationSpeed;
+
 
 @property NSInteger freeSpaceRow;
 @property NSInteger freeSpaceColumn;
