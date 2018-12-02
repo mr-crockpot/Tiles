@@ -16,6 +16,8 @@
 
 - (void)viewDidLoad {
     [self createTiles];
+    
+   
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -27,7 +29,7 @@
     
     NSInteger columns = 5;
     
-    _animationSpeed = 0.1;
+    _animationSpeed = 2;
     
     _width = _screenWidth/(columns+1);
     _height = _width;
@@ -290,4 +292,55 @@
     
 }
 
+- (IBAction)start:(id)sender {
+    [self makeRandomMove];
+}
+
+
+-(void)makeRandomMove {
+    _animationSpeed = 2.0;
+    NSLog(@"I'm here");
+    NSInteger random;
+    NSMutableArray *arrFreeColumnTiles =[[NSMutableArray alloc] init];
+    NSMutableArray *arrFreeRowTiles = [[NSMutableArray alloc] init];
+    BOOL UseColumn = YES;
+    
+    for (int x = 1; x<50; x++) {
+        
+    
+        [arrFreeRowTiles removeAllObjects];
+        [arrFreeColumnTiles removeAllObjects];
+        
+        for (Tiles *freeTiles in _arrButtons){
+            
+            if (freeTiles.row == _freeSpaceRow) {
+                [arrFreeRowTiles addObject:freeTiles];
+                
+            }
+            if (freeTiles.column == _freeSpaceColumn) {
+                [arrFreeColumnTiles addObject:freeTiles];
+                
+            }
+        }
+        
+       
+    
+    random = arc4random_uniform(arrFreeColumnTiles.count);
+       
+        if (UseColumn) {
+            [self adjustButtons:[arrFreeColumnTiles objectAtIndex:random]];
+        }
+        if (!UseColumn) {
+            [self adjustButtons:[arrFreeRowTiles objectAtIndex:random]];
+        }
+        
+        UseColumn = !UseColumn;
+        
+    
+    }
+    _animationSpeed = 0.2;
+}
+
+- (IBAction)btnStart:(id)sender {
+}
 @end

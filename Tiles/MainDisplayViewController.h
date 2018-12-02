@@ -34,6 +34,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property NSInteger freeSpaceRow;
 @property NSInteger freeSpaceColumn;
+- (IBAction)btnStart:(id)sender;
+
 
 @end
 
