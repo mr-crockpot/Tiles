@@ -25,7 +25,7 @@
     _screenWidth = [UIScreen mainScreen].bounds.size.width;
     _screenHeight = [UIScreen mainScreen].bounds.size.height;
     
-    NSInteger columns = 4;
+    NSInteger columns = 5;
     
     _animationSpeed = 0.1;
     
@@ -40,8 +40,8 @@
     NSInteger row = 0;
     NSInteger index;
     NSString *label;
-    _freeSpaceRow = 4;
-    _freeSpaceColumn = 4;
+    _freeSpaceRow = columns;
+    _freeSpaceColumn = columns;
    
     _arrButtons = [[NSMutableArray alloc] init];
     
@@ -50,35 +50,35 @@
         
         label = [NSString stringWithFormat:@"%i",x];
         if (x<=columns) {
-            xPosition = startX;
-            yPosition = startY * x;
-            column = 1;
-            row = x;
+            xPosition = startX + (_width* (x-1));
+            yPosition = startY;
+            column = x;
+            row = 1;
         }
         
         if (x>columns && x<=columns*2) {
-            xPosition = startX + _width;
-            yPosition = startY * (x-columns);
-            column = 2;
-            row = x-columns;
+            xPosition = startX +(_width * (x - columns-1));
+            yPosition = startY + _width;
+            column = x - columns;
+            row = 2;
         }
         if (x>columns*2 && x <= columns *3) {
-            xPosition = startX + 2*_width;
-            yPosition = startY * (x-columns*2);
-            column = 3;
-            row = x-2*columns;
+            xPosition = startX +(_width * (x - columns*2-1));
+            yPosition = startY + 2*_width;
+            column = x-2*columns;
+            row = 3;
         }
         if (x>columns*3 && x <= columns *4) {
-            xPosition = startX + 3* _width;
-            yPosition = startY * (x-columns*3);
-            column = 4;
-            row = x-3*columns;
+            xPosition = startX +(_width * (x - columns*3-1));
+            yPosition = startY + 3* _width;
+            column = x-3*columns;
+            row = 4;
         }
         if (x>columns*4 && x <= columns *5) {
-            xPosition = startX + 4* _width;
-            yPosition = startY * (x-columns*4);
-            column = 5;
-            row = x-4*columns;
+            xPosition = startX +(_width * (x - columns*4-1));
+            yPosition = startY + 4* _width;
+            column = x-4*columns;
+            row = 5;
         }
         
     index = [[NSString stringWithFormat:@"%li%li",row,column] integerValue];
