@@ -12,7 +12,7 @@
 
 
 
--(Tiles *)TileButton: (UIColor *)backcolor xPosition:(float)xPosition yPosition: (float)yPosition width: (float)width height: (float) height tag: (NSInteger) tag label: (NSString *)label{
+-(Tiles *)TileButton: (UIColor *)backcolor xPosition:(float)xPosition yPosition: (float)yPosition width: (float)width height: (float) height tag: (NSInteger) tag label: (NSString *)label row:(NSInteger)row column:(NSInteger)column{
     
     self.backgroundColor = backcolor;
     self.frame = CGRectMake(xPosition, yPosition, width, height);
@@ -20,6 +20,8 @@
     self.layer.borderColor = [[UIColor blackColor] CGColor];
     self.layer.borderWidth = 3;
     [self setTitle:label forState:UIControlStateNormal];
+    self.row = row;
+    self.column = column;
     
     return  self;
 }

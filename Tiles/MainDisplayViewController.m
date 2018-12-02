@@ -46,53 +46,29 @@
     _arrButtons = [[NSMutableArray alloc] init];
     
     
-    for (int x=1; x<columns*columns; x++) {
+    
+    for (int x=0; x<columns; x++) {
         
-        label = [NSString stringWithFormat:@"%i",x];
-        if (x<=columns) {
-            xPosition = startX + (_width* (x-1));
-            yPosition = startY;
-            column = x;
-            row = 1;
+        for (int y = 0; y<columns; y++) {
+            xPosition = startX + (_width * y);
+            yPosition= startY + (x*_height);
+            column = y+1;
+            row = x+1;
+            
+            if (row != _freeSpaceRow || column !=_freeSpaceColumn){
+                label = [NSString stringWithFormat:@"%li",(x*columns)+y+1];
+                index = [[NSString stringWithFormat:@"%i%i", x+1,y+1]  integerValue];
+                _testTile = [[Tiles alloc] init];
+               
+                [_testTile TileButton:[UIColor blueColor] xPosition:xPosition yPosition:yPosition width:_width height:_height tag:index label:label row:row column:column];
+                [self.view addSubview:_testTile];
+                [_arrButtons addObject:_testTile];
+                [_testTile addTarget:self action:@selector(adjustButtons:) forControlEvents:UIControlEventTouchDown];
+            }
         }
-        
-        if (x>columns && x<=columns*2) {
-            xPosition = startX +(_width * (x - columns-1));
-            yPosition = startY + _width;
-            column = x - columns;
-            row = 2;
-        }
-        if (x>columns*2 && x <= columns *3) {
-            xPosition = startX +(_width * (x - columns*2-1));
-            yPosition = startY + 2*_width;
-            column = x-2*columns;
-            row = 3;
-        }
-        if (x>columns*3 && x <= columns *4) {
-            xPosition = startX +(_width * (x - columns*3-1));
-            yPosition = startY + 3* _width;
-            column = x-3*columns;
-            row = 4;
-        }
-        if (x>columns*4 && x <= columns *5) {
-            xPosition = startX +(_width * (x - columns*4-1));
-            yPosition = startY + 4* _width;
-            column = x-4*columns;
-            row = 5;
-        }
-        
-    index = [[NSString stringWithFormat:@"%li%li",row,column] integerValue];
-       
-    _testTile = [[Tiles alloc] init];
-        [_testTile TileButton:[UIColor orangeColor] xPosition:xPosition yPosition:yPosition width:_width height:_height tag:index label:label];
-    [self.view addSubview:_testTile];
-        
-    [_arrButtons addObject:_testTile];
-  //  [_testTile addTarget:self action:@selector(adjustButtons:) forControlEvents:UIControlEventTouchUpInside];
-     [_testTile addTarget:self action:@selector(adjustButtons:) forControlEvents:UIControlEventTouchDown];
-        
     }
-    //[self createUpArray];
+    
+   
 }
    
 -(void)adjustButtons: (UIButton*)sender {
@@ -103,11 +79,10 @@
     NSInteger tileColumnK;
     NSInteger actionNumber = 0;
     
-    tileRowK = floor(sender.tag/10);
-    tileColumnK = sender.tag - tileRowK*10;
-
-    NSLog(@"The row is %li and column in %li",tileRowK,tileColumnK);
+    tileRowK = ((Tiles *)sender).row;
+    tileColumnK =((Tiles *)sender).column;
     
+   
     if (_freeSpaceColumn<tileColumnK && _freeSpaceRow==tileRowK) {
         actionNumber =1;
     }
@@ -167,15 +142,15 @@
     
     
     for (Tiles *upTiles in _arrButtons) {
-        
-        tileRow = floor(upTiles.tag/10);
-        tileColumn = upTiles.tag - tileRow*10;
-        NSInteger newTag;
+
+        tileRow = upTiles.row;
+        tileColumn = upTiles.column;
         
         if (rowK <_freeSpaceRow && columnK == _freeSpaceColumn && rowK <= tileRow && columnK == tileColumn && tileRow < _freeSpaceRow) {
             [_arrAboveFreeButtons addObject:upTiles];
-            newTag = tileRow*10+10+tileColumn;
-            upTiles.tag = newTag;
+            upTiles.row = upTiles.row + 1;
+            //newTag = tileRow*10+10+tileColumn;
+            //upTiles.tag = newTag;
         }
         
         }
@@ -208,14 +183,14 @@
     
     for (Tiles *downTiles in _arrButtons) {
         
-        tileRow = floor(downTiles.tag/10);
-        tileColumn = downTiles.tag - tileRow*10;
-        NSInteger newTag;
+        tileRow = downTiles.row;
+        tileColumn = downTiles.column;
         
         if (rowK  > _freeSpaceRow && columnK == _freeSpaceColumn && rowK >= tileRow && columnK == tileColumn && tileRow > _freeSpaceRow) {
             [_arrBelowFreeButtons addObject:downTiles];
-            newTag = tileRow*10-10+tileColumn;
-            downTiles.tag = newTag;
+            
+            downTiles.row = downTiles.row -1;
+           
         }
         
     }
@@ -247,16 +222,14 @@
     
     
     for (Tiles *leftTiles in _arrButtons) {
-        
-        tileRow = floor(leftTiles.tag/10);
-        tileColumn = leftTiles.tag - tileRow*10;
-        NSInteger newTag;
-        
+        tileRow = leftTiles.row;
+        tileColumn = leftTiles.column;
+    
         if (rowK  == _freeSpaceRow && columnK > _freeSpaceColumn && rowK == tileRow && columnK >= tileColumn && tileRow == _freeSpaceRow && tileColumn>_freeSpaceColumn) {
             [_arrRightFreeButtons addObject:leftTiles];
-            newTag = tileRow*10+tileColumn-1;
-            leftTiles.tag = newTag;
-         
+            
+            leftTiles.column = leftTiles.column - 1;
+            
         }
     
     }
@@ -287,16 +260,16 @@
     _arrLeftFreeButtons = [[NSMutableArray alloc] init];
     
     
-    for (Tiles *downTiles in _arrButtons) {
+    for (Tiles *rightTiles in _arrButtons) {
         
-        tileRow = floor(downTiles.tag/10);
-        tileColumn = downTiles.tag - tileRow*10;
-        NSInteger newTag;
+        
+        tileRow = rightTiles.row;
+        tileColumn = rightTiles.column;
+        
         
         if (rowK  == _freeSpaceRow && columnK < _freeSpaceColumn && rowK == tileRow && columnK <= tileColumn && tileRow == _freeSpaceRow && tileColumn < _freeSpaceColumn) {
-            [_arrLeftFreeButtons addObject:downTiles];
-            newTag = tileRow*10+tileColumn+1;
-            downTiles.tag = newTag;
+            [_arrLeftFreeButtons addObject:rightTiles];
+            rightTiles.column = rightTiles.column + 1;
         }
         
     }

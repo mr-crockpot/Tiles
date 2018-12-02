@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property float screenHeight;
 
 
+@property NSInteger columns;
+
 
 @property NSInteger freeSpaceRow;
 @property NSInteger freeSpaceColumn;

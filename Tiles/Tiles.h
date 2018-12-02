@@ -13,8 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Tiles : UIButton
 
 
--(Tiles *)TileButton: (UIColor *)backcolor xPosition:(float)xPosition yPosition: (float)yPosition width: (float)width height: (float) height tag: (NSInteger) tag label: (NSString *)label;
+-(Tiles *)TileButton: (UIColor *)backcolor xPosition:(float)xPosition yPosition: (float)yPosition width: (float)width height: (float) height tag: (NSInteger) tag label: (NSString *)label row:(NSInteger)row column:(NSInteger)column;
 
+@property NSInteger column;
+@property NSInteger row;
 
 
 @end
