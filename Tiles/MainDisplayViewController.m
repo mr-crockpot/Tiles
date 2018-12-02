@@ -25,7 +25,7 @@
     _screenWidth = [UIScreen mainScreen].bounds.size.width;
     _screenHeight = [UIScreen mainScreen].bounds.size.height;
     
-    NSInteger columns =4;
+    NSInteger columns = 4;
     
     _animationSpeed = 0.1;
     
@@ -73,6 +73,12 @@
             yPosition = startY * (x-columns*3);
             column = 4;
             row = x-3*columns;
+        }
+        if (x>columns*4 && x <= columns *5) {
+            xPosition = startX + 4* _width;
+            yPosition = startY * (x-columns*4);
+            column = 5;
+            row = x-4*columns;
         }
         
     index = [[NSString stringWithFormat:@"%li%li",row,column] integerValue];
