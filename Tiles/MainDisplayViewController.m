@@ -21,48 +21,64 @@
 }
 
 -(void)createTiles{
-    _animationSpeed = 0.2;
-    float startX = 50;
-    float startY = 100;
-    float width = 50;
-    float height = 50;
+    
+    _screenWidth = [UIScreen mainScreen].bounds.size.width;
+    _screenHeight = [UIScreen mainScreen].bounds.size.height;
+    
+    NSInteger columns =4;
+    
+    _animationSpeed = 0.1;
+    
+    _width = _screenWidth/(columns+1);
+    _height = _width;
+    
+    float startX = _width/2;
+    float startY = _width;
     float xPosition = 0.0;
     float yPosition = 0.0;
     NSInteger column = 0;
     NSInteger row = 0;
     NSInteger index;
-    
-    _freeSpaceRow = 3;
-    _freeSpaceColumn = 1;
-    
+    NSString *label;
+    _freeSpaceRow = 4;
+    _freeSpaceColumn = 4;
+   
     _arrButtons = [[NSMutableArray alloc] init];
     
     
-    for (int x=1; x<9; x++) {
-        if (x<3) {
+    for (int x=1; x<columns*columns; x++) {
+        
+        label = [NSString stringWithFormat:@"%i",x];
+        if (x<=columns) {
             xPosition = startX;
             yPosition = startY * x;
             column = 1;
             row = x;
         }
         
-        if (x>2 && x<6) {
-            xPosition = startX + 100;
-            yPosition = startY * (x-2);
+        if (x>columns && x<=columns*2) {
+            xPosition = startX + _width;
+            yPosition = startY * (x-columns);
             column = 2;
-            row = x-2;
+            row = x-columns;
         }
-        if (x>5) {
-            xPosition = startX + 200;
-            yPosition = startY * (x-5);
+        if (x>columns*2 && x <= columns *3) {
+            xPosition = startX + 2*_width;
+            yPosition = startY * (x-columns*2);
             column = 3;
-            row = x-5;
+            row = x-2*columns;
+        }
+        if (x>columns*3 && x <= columns *4) {
+            xPosition = startX + 3* _width;
+            yPosition = startY * (x-columns*3);
+            column = 4;
+            row = x-3*columns;
         }
         
     index = [[NSString stringWithFormat:@"%li%li",row,column] integerValue];
        
     _testTile = [[Tiles alloc] init];
-    [_testTile TileButton:[UIColor orangeColor] xPosition:xPosition yPosition:yPosition width:width height:height tag:index];
+        [_testTile TileButton:[UIColor orangeColor] xPosition:xPosition yPosition:yPosition width:_width height:_height tag:index label:label];
     [self.view addSubview:_testTile];
         
     [_arrButtons addObject:_testTile];
@@ -83,7 +99,8 @@
     
     tileRowK = floor(sender.tag/10);
     tileColumnK = sender.tag - tileRowK*10;
-    
+
+    NSLog(@"The row is %li and column in %li",tileRowK,tileColumnK);
     
     if (_freeSpaceColumn<tileColumnK && _freeSpaceRow==tileRowK) {
         actionNumber =1;
@@ -121,7 +138,7 @@
             [self moveDown:tileRowK column:tileColumnK];
             break;
         case 5:
-            NSLog(@"Nowhere to go");
+            
             break;
 
             
@@ -160,7 +177,7 @@
     
     [UIView animateWithDuration:_animationSpeed animations:^{
         for (Tiles *activeTile in self.arrAboveFreeButtons) {
-            activeTile.frame = CGRectMake(activeTile.frame.origin.x, activeTile.frame.origin.y+100, 50, 50);
+            activeTile.frame = CGRectMake(activeTile.frame.origin.x, activeTile.frame.origin.y+self->_height, self->_width, self->_height);
             
         }
     }];
@@ -171,7 +188,7 @@
     _freeSpaceRow = rowK;
     _freeSpaceColumn = columnK;
     
-   NSLog(@"Moved Down. The free space is %li,%li",rowK,columnK);
+  
     
 }
 
@@ -200,7 +217,7 @@
     
     [UIView animateWithDuration:_animationSpeed animations:^{
         for (Tiles *activeTile in self.arrBelowFreeButtons) {
-            activeTile.frame = CGRectMake(activeTile.frame.origin.x, activeTile.frame.origin.y-100, 50, 50);
+            activeTile.frame = CGRectMake(activeTile.frame.origin.x, activeTile.frame.origin.y-self->_width, self->_width, self->_height);
             
         }
     }];
@@ -211,7 +228,7 @@
     _freeSpaceRow = rowK;
     _freeSpaceColumn = columnK;
     
-    NSLog(@"Moved up. The free space is %li,%li",rowK,columnK);
+    
     
 }
 
@@ -233,7 +250,7 @@
             [_arrRightFreeButtons addObject:leftTiles];
             newTag = tileRow*10+tileColumn-1;
             leftTiles.tag = newTag;
-            NSLog(@"The new tag is %li",newTag);
+         
         }
     
     }
@@ -241,7 +258,7 @@
     
     [UIView animateWithDuration:_animationSpeed animations:^{
         for (Tiles *activeTile in self.arrRightFreeButtons) {
-            activeTile.frame = CGRectMake(activeTile.frame.origin.x-100, activeTile.frame.origin.y, 50, 50);
+            activeTile.frame = CGRectMake(activeTile.frame.origin.x-self->_width, activeTile.frame.origin.y, self->_width, self->_height);
             
         }
     }];
@@ -252,7 +269,7 @@
     _freeSpaceRow = rowK;
     _freeSpaceColumn = columnK;
     
-    NSLog(@"Moved Left. The free space is %li,%li",_freeSpaceRow,_freeSpaceColumn);
+    
     
 }
 
@@ -280,7 +297,7 @@
     
     [UIView animateWithDuration:_animationSpeed animations:^{
         for (Tiles *activeTile in self.arrLeftFreeButtons) {
-            activeTile.frame = CGRectMake(activeTile.frame.origin.x+100, activeTile.frame.origin.y, 50, 50);
+            activeTile.frame = CGRectMake(activeTile.frame.origin.x+self->_width, activeTile.frame.origin.y, self->_width, self->_height);
             
         }
     }];
@@ -290,8 +307,7 @@
     
     _freeSpaceRow = rowK;
     _freeSpaceColumn = columnK;
-    NSLog(@"Moved Right. The free space is %li,%li",rowK,columnK);
-    
+   
     
 }
 

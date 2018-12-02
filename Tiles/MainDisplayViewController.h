@@ -23,6 +23,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property float animationSpeed;
 
 
+@property float width;
+@property float height;
+@property float screenWidth;
+@property float screenHeight;
+
+
+
 @property NSInteger freeSpaceRow;
 @property NSInteger freeSpaceColumn;
 

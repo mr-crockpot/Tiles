@@ -12,14 +12,14 @@
 
 
 
--(Tiles *)TileButton: (UIColor *)backcolor xPosition:(float)xPosition yPosition: (float)yPosition width: (float)width height: (float) height tag: (NSInteger) tag{
+-(Tiles *)TileButton: (UIColor *)backcolor xPosition:(float)xPosition yPosition: (float)yPosition width: (float)width height: (float) height tag: (NSInteger) tag label: (NSString *)label{
     
     self.backgroundColor = backcolor;
     self.frame = CGRectMake(xPosition, yPosition, width, height);
     self.tag = tag;
     self.layer.borderColor = [[UIColor blackColor] CGColor];
     self.layer.borderWidth = 3;
-    [self setTitle:[NSString stringWithFormat:@"%li",tag] forState:UIControlStateNormal];
+    [self setTitle:label forState:UIControlStateNormal];
     
     return  self;
 }
