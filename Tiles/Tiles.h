@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property NSInteger column;
 @property NSInteger row;
+@property NSString *label;
 
 
 @end

@@ -15,54 +15,86 @@
 @implementation MainDisplayViewController
 
 - (void)viewDidLoad {
-    [self createTiles];
+    
+    [self setGameMode];
     
    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
 
--(void)createTiles{
+-(void)setGameMode {
+    NSInteger gameMode = 1;
+    [self createTilesByMode:gameMode];
+    
+    
+}
+
+-(void)createTilesByMode: (NSInteger) gameMode{
     
     _screenWidth = [UIScreen mainScreen].bounds.size.width;
     _screenHeight = [UIScreen mainScreen].bounds.size.height;
     
-    NSInteger columns = 5;
+     _columns = 4;
     
     _animationSpeed = 2;
     
-    _width = _screenWidth/(columns+1);
+    _width = _screenWidth/(_columns+1);
     _height = _width;
     
     float startX = _width/2;
-    float startY = _width;
+    float startY = _width+100;
     float xPosition = 0.0;
     float yPosition = 0.0;
     NSInteger column = 0;
     NSInteger row = 0;
     NSInteger index;
     NSString *label;
-    _freeSpaceRow = columns;
-    _freeSpaceColumn = columns;
+    _freeSpaceRow = _columns;
+    _freeSpaceColumn = _columns;
    
     _arrButtons = [[NSMutableArray alloc] init];
     
+    UIColor *tileBackground;
     
     
-    for (int x=0; x<columns; x++) {
+    for (int x=0; x<_columns; x++) {
         
-        for (int y = 0; y<columns; y++) {
+        for (int y = 0; y<_columns; y++) {
             xPosition = startX + (_width * y);
             yPosition= startY + (x*_height);
             column = y+1;
             row = x+1;
             
             if (row != _freeSpaceRow || column !=_freeSpaceColumn){
-                label = [NSString stringWithFormat:@"%li",(x*columns)+y+1];
+                label = [NSString stringWithFormat:@"%li",(x*_columns)+y+1];
                 index = [[NSString stringWithFormat:@"%i%i", x+1,y+1]  integerValue];
                 _testTile = [[Tiles alloc] init];
                
-                [_testTile TileButton:[UIColor blueColor] xPosition:xPosition yPosition:yPosition width:_width height:_height tag:index label:label row:row column:column];
+               //NSLog(@"The game mode is %li",gameMode);
+                switch (gameMode) {
+                    case 1:
+                        tileBackground = [UIColor blueColor];
+                         [_testTile TileButton:tileBackground xPosition:xPosition yPosition:yPosition width:_width height:_height tag:index label:label row:row column:column];
+                        break;
+                    case 2:
+                       // NSLog(@"This is index %li",index);
+                        if (index %2 ) {
+                            tileBackground = [UIColor greenColor];
+                        }
+                        else {
+                            tileBackground = [UIColor redColor];
+                        }
+                       
+                          [_testTile TileButton:tileBackground xPosition:xPosition yPosition:yPosition width:_width height:_height tag:index label:@"" row:row column:column];
+                        break;
+                    default:
+                        break;
+                }
+               
+              
+                
+                
                 [self.view addSubview:_testTile];
                 [_arrButtons addObject:_testTile];
                 [_testTile addTarget:self action:@selector(adjustButtons:) forControlEvents:UIControlEventTouchDown];
@@ -129,9 +161,9 @@
             break;
     }
     
-    
-   
-        
+    if ([self Check]) {
+        NSLog(@"Finished");
+    }
         }
     
 
@@ -298,14 +330,14 @@
 
 
 -(void)makeRandomMove {
-    _animationSpeed = 2.0;
-    NSLog(@"I'm here");
+    _animationSpeed = 1.5;
+    
     NSInteger random;
     NSMutableArray *arrFreeColumnTiles =[[NSMutableArray alloc] init];
     NSMutableArray *arrFreeRowTiles = [[NSMutableArray alloc] init];
     BOOL UseColumn = YES;
     
-    for (int x = 1; x<50; x++) {
+    for (int x = 1; x<100; x++) {
         
     
         [arrFreeRowTiles removeAllObjects];
@@ -328,19 +360,38 @@
     random = arc4random_uniform(arrFreeColumnTiles.count);
        
         if (UseColumn) {
-            [self adjustButtons:[arrFreeColumnTiles objectAtIndex:random]];
+          [self adjustButtons:[arrFreeColumnTiles objectAtIndex:random]];
+            
         }
         if (!UseColumn) {
-            [self adjustButtons:[arrFreeRowTiles objectAtIndex:random]];
+          [self adjustButtons:[arrFreeRowTiles objectAtIndex:random]];
         }
+        
         
         UseColumn = !UseColumn;
         
-    
+        
     }
     _animationSpeed = 0.2;
+    
 }
 
 - (IBAction)btnStart:(id)sender {
+}
+
+
+-(BOOL)Check {
+    
+    NSInteger total;
+    BOOL inPlace = YES;
+    
+    for (Tiles *checkTiles in _arrButtons) {
+        total = (checkTiles.row-1) * _columns + (checkTiles.column);
+        if ([checkTiles.label integerValue] != total) {
+            inPlace = NO;
+        }
+    }
+    return inPlace;
+   
 }
 @end
