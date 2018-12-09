@@ -12,6 +12,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MainDisplayViewController : UIViewController
+    <UIPickerViewDelegate, UIPickerViewDelegate>
+
+@property (strong, nonatomic) IBOutlet UIPickerView *pickerGrid;
+
+@property (strong, nonatomic) IBOutlet UIStepper *stepperGrid;
+- (IBAction)stepperGridChanged:(id)sender;
 
 @property (strong, nonatomic) IBOutlet Tiles *testTile;
 @property (strong, nonatomic) NSMutableArray *arrButtons;

@@ -17,25 +17,28 @@
 - (void)viewDidLoad {
     
     [self setGameMode];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"darkWood.jpg"]];
+    _stepperGrid.value = 4;
+    _stepperGrid.maximumValue = 10;
+    _stepperGrid.minimumValue = 2;
     
-   
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
 
 -(void)setGameMode {
     NSInteger gameMode = 1;
-    [self createTilesByMode:gameMode];
+    [self createTilesByMode:gameMode columns:4];
     
     
 }
 
--(void)createTilesByMode: (NSInteger) gameMode{
-    
+-(void)createTilesByMode: (NSInteger) gameMode columns: (NSInteger) columns{
+    gameMode = 1;
     _screenWidth = [UIScreen mainScreen].bounds.size.width;
     _screenHeight = [UIScreen mainScreen].bounds.size.height;
     
-     _columns = 4;
+     _columns = columns;
     
     _animationSpeed = 2;
     
@@ -393,5 +396,21 @@
     }
     return inPlace;
    
+}
+
+-(void)setUpPickerView{
+  //  [self.navigationController.navigationBar.topItem setTitleView:_pickerGrid];
+    
+}
+
+
+
+
+- (IBAction)stepperGridChanged:(UIStepper*)sender {
+   // _columns = _columns + 1;
+    NSLog(@"The button value is %li",sender.value);
+    NSLog(@"The stepper value is %li",_stepperGrid
+          .value);
+
 }
 @end
