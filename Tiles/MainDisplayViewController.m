@@ -18,10 +18,7 @@
     
     [self setGameMode];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"darkWood.jpg"]];
-    _stepperGrid.value = 4;
     
-    _stepperGrid.maximumValue = 10;
-    _stepperGrid.minimumValue = 2;
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -29,6 +26,10 @@
 
 -(void)setGameMode {
     NSInteger gameMode = 1;
+    _stepperGrid.value = 4;
+    _stepperGrid.maximumValue = 10;
+    _stepperGrid.minimumValue = 2;
+    _numberOfMoves = 0;
     [self createTilesByMode:gameMode columns:4];
     
     
@@ -167,9 +168,11 @@
     
     if ([self Check]) {
         [_timer invalidate];
-        NSLog(@"Finished");
+        
     }
-        }
+    _numberOfMoves = _numberOfMoves + 1;
+    _lblMoves.text = [NSString stringWithFormat:@"%li moves",_numberOfMoves];
+}
     
 
 -(void)moveDown: (NSInteger)rowK column:(NSInteger)columnK {
@@ -379,6 +382,7 @@
     }
     _animationSpeed = 0.01;
     _time = 0;
+    _numberOfMoves = 0;
     
     [self runTimer];
     

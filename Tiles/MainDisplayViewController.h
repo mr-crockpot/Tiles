@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @property (strong, nonatomic) IBOutlet UILabel *lblTimer;
+@property (strong, nonatomic) IBOutlet UILabel *lblMoves;
+
 @property (strong, nonatomic) NSTimer *timer;
 @property float time;
 
@@ -32,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property float animationSpeed;
 
+@property NSInteger numberOfMoves;
 
 @property float width;
 @property float height;
@@ -45,6 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSInteger freeSpaceRow;
 @property NSInteger freeSpaceColumn;
 - (IBAction)btnStart:(id)sender;
+
 
 
 @end

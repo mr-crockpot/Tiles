@@ -24,6 +24,7 @@
     [self setTitle:_label forState:UIControlStateNormal];
     self.titleLabel.font = [UIFont fontWithName:@"Arial" size:width*.8];
     [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    self.layer.cornerRadius = 15;
    /* self.layer.shadowOffset = CGSizeMake(2, 2);
     self.layer.shadowColor = [[UIColor blackColor] CGColor];
     self.layer.shadowRadius = 5;
