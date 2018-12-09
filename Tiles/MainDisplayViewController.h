@@ -14,7 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MainDisplayViewController : UIViewController
     <UIPickerViewDelegate, UIPickerViewDelegate>
 
-@property (strong, nonatomic) IBOutlet UIPickerView *pickerGrid;
+
+@property (strong, nonatomic) IBOutlet UILabel *lblTimer;
+@property (strong, nonatomic) NSTimer *timer;
+@property float time;
+
 
 @property (strong, nonatomic) IBOutlet UIStepper *stepperGrid;
 - (IBAction)stepperGridChanged:(id)sender;

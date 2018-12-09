@@ -19,6 +19,7 @@
     [self setGameMode];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"darkWood.jpg"]];
     _stepperGrid.value = 4;
+    
     _stepperGrid.maximumValue = 10;
     _stepperGrid.minimumValue = 2;
     
@@ -165,6 +166,7 @@
     }
     
     if ([self Check]) {
+        [_timer invalidate];
         NSLog(@"Finished");
     }
         }
@@ -375,7 +377,10 @@
         
         
     }
-    _animationSpeed = 0.2;
+    _animationSpeed = 0.01;
+    _time = 0;
+    
+    [self runTimer];
     
 }
 
@@ -398,19 +403,37 @@
    
 }
 
--(void)setUpPickerView{
-  //  [self.navigationController.navigationBar.topItem setTitleView:_pickerGrid];
+
+- (IBAction)stepperGridChanged:(UIStepper*)sender {
+   _columns = _stepperGrid.value;
+    for (Tiles *existingTiles in _arrButtons) {
+        [existingTiles removeFromSuperview];
+    }
+    [self createTilesByMode:1 columns:_columns];
+
+}
+-(void)runTimer {
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(timerFunction) userInfo:nil repeats:YES];
     
 }
 
-
-
-
-- (IBAction)stepperGridChanged:(UIStepper*)sender {
-   // _columns = _columns + 1;
-    NSLog(@"The button value is %li",sender.value);
-    NSLog(@"The stepper value is %li",_stepperGrid
-          .value);
-
+- (void)timerFunction {
+    _time = _time + 0.1;
+   // _lblTimer.text = [NSString stringWithFormat:@"%.0f",_time];
+    
+     NSDateComponentsFormatter *componentFormatter = [[NSDateComponentsFormatter alloc] init];
+     componentFormatter.unitsStyle = NSDateComponentsFormatterUnitsStylePositional;
+     componentFormatter.zeroFormattingBehavior = NSDateComponentsFormatterZeroFormattingBehaviorDefault;
+     
+     NSTimeInterval interval = _time;
+     NSString *formattedString = [componentFormatter stringFromTimeInterval:interval];
+     
+     _lblTimer.text = formattedString;
+    float fontSize = _lblTimer.bounds.size.height * .8;
+    _lblTimer.font = [UIFont fontWithName:@"Helvetica" size:fontSize];
+    
+    
+    
+    
 }
 @end
