@@ -8,12 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "Tiles.h"
+#import "NavBarLabels.h"
+#import "clipImage.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MainDisplayViewController : UIViewController
     <UIPickerViewDelegate, UIPickerViewDelegate>
 
+@property NavBarLabels *navLblTimer;
 
 @property (strong, nonatomic) IBOutlet UILabel *lblTimer;
 @property (strong, nonatomic) IBOutlet UILabel *lblMoves;

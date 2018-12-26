@@ -14,8 +14,17 @@
 -(Tiles *)TileButton: (UIColor *)backcolor xPosition:(float)xPosition yPosition: (float)yPosition width: (float)width height: (float) height tag: (NSInteger) tag label: (NSString *)label row:(NSInteger)row column:(NSInteger)column{
     
     _label = label;
-   // self.backgroundColor = backcolor;
-    self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"wood.jpg"]];
+   //self.backgroundColor = backcolor;
+   // self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"wood.jpg"]];
+  //  self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"faces.jpg"]];
+  //  [self setImage:[UIImage imageNamed: @"faces.jpg"] forState:UIControlStateNormal];
+    self.clipsToBounds = YES;
+  /*  self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
+    self.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
+    self.imageView.contentMode = UIViewContentModeScaleApectFit;
+*/
+
+    [self setImage:[clipImage cropImage:[UIImage imageNamed:@"faces.jpg"] xPosition:1000 yPosition:1000 width:500 height:500] forState:UIControlStateNormal];
     
     self.frame = CGRectMake(xPosition, yPosition, width, height);
     self.tag = tag;
@@ -24,12 +33,9 @@
     [self setTitle:_label forState:UIControlStateNormal];
     self.titleLabel.font = [UIFont fontWithName:@"Arial" size:width*.8];
     [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    self.layer.cornerRadius = 15;
-   /* self.layer.shadowOffset = CGSizeMake(2, 2);
-    self.layer.shadowColor = [[UIColor blackColor] CGColor];
-    self.layer.shadowRadius = 5;
-    self.layer.shadowOpacity = 0.8;
-    */
+ //   self.layer.cornerRadius = 15;
+   
+    
    // self.titleLabel.adjustsFontSizeToFitWidth = YES;
     self.titleLabel.numberOfLines = 1;
     self.row = row;

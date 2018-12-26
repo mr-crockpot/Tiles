@@ -13,19 +13,23 @@
 @end
 
 @implementation MainDisplayViewController
-
+-(BOOL)prefersStatusBarHidden{
+    return YES;
+}
 - (void)viewDidLoad {
     
     [self setGameMode];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"darkWood.jpg"]];
+   
+   
     
-    
+
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
 
 -(void)setGameMode {
-    NSInteger gameMode = 1;
+    NSInteger gameMode = 3;
     _stepperGrid.value = 4;
     _stepperGrid.maximumValue = 10;
     _stepperGrid.minimumValue = 2;
@@ -88,10 +92,13 @@
                             tileBackground = [UIColor greenColor];
                         }
                         else {
-                            tileBackground = [UIColor redColor];
+                           tileBackground = [UIColor redColor];
                         }
                        
                           [_testTile TileButton:tileBackground xPosition:xPosition yPosition:yPosition width:_width height:_height tag:index label:@"" row:row column:column];
+                        break;
+                    case 3:
+                        
                         break;
                     default:
                         break;
@@ -107,6 +114,7 @@
         }
     }
     
+    [self createShadow];
    
 }
    
@@ -165,7 +173,7 @@
         default:
             break;
     }
-    
+    [self createShadow];
     if ([self Check]) {
         [_timer invalidate];
         
@@ -174,7 +182,23 @@
     _lblMoves.text = [NSString stringWithFormat:@"%li moves",_numberOfMoves];
 }
     
-
+-(void)createShadow {
+    
+    for (Tiles *eachTile in _arrButtons) {
+        if (eachTile.column == _columns) {
+            eachTile.layer.shadowOffset = CGSizeMake(2.0, 0.0);
+            eachTile.layer.shadowColor = [[UIColor blackColor] CGColor];
+            eachTile.layer.shadowRadius = 2.0;
+            eachTile.layer.shadowOpacity = 0.8;}
+        else {
+            eachTile.layer.shadowRadius = 0.0;
+            eachTile.layer.shadowOpacity = 0.0;
+            eachTile.layer.shadowColor = nil;
+        }
+    }
+    
+    
+}
 -(void)moveDown: (NSInteger)rowK column:(NSInteger)columnK {
  
     NSInteger tileRow;
