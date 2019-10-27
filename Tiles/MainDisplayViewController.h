@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "Tiles.h"
 #import "NavBarLabels.h"
-#import "clipImage.h"
+#import "ClipImage.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MainDisplayViewController : UIViewController
-    <UIPickerViewDelegate, UIPickerViewDelegate>
+    <UIPickerViewDelegate, UIPickerViewDelegate, UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
 @property NavBarLabels *navLblTimer;
 
@@ -29,6 +29,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)stepperGridChanged:(id)sender;
 
 @property (strong, nonatomic) IBOutlet Tiles *testTile;
+
+@property (strong, nonatomic) IBOutlet Tiles *tile;
+
+@property (strong,nonatomic) NSString *imageName;
 @property (strong, nonatomic) NSMutableArray *arrButtons;
 @property (strong, nonatomic) NSMutableArray *arrAboveFreeButtons;
 @property (strong, nonatomic) NSMutableArray *arrBelowFreeButtons;

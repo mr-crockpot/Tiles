@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cqy-fU-39X">
-    <device id="ipad10_5" orientation="landscape">
+    <device id="ipad10_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,17 +15,17 @@
             <objects>
                 <viewController id="cqy-fU-39X" customClass="MainDisplayViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="brt-xU-Are">
-                        <rect key="frame" x="0.0" y="0.0" width="1112" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ooz-Aj-8ab">
-                                <rect key="frame" x="0.0" y="20" width="1112" height="50"/>
+                                <rect key="frame" x="0.0" y="20" width="834" height="50"/>
                                 <items>
                                     <navigationItem id="ylS-Kt-dW6"/>
                                 </items>
                             </navigationBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V3n-Lo-9QP">
-                                <rect key="frame" x="645" y="20" width="44" height="50"/>
+                                <rect key="frame" x="478.5" y="20" width="44" height="50"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -37,7 +37,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5h1-ey-1pO">
-                                <rect key="frame" x="0.0" y="784" width="1112" height="50"/>
+                                <rect key="frame" x="0.0" y="1062" width="834" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
                                     <barButtonItem style="plain" id="JRD-Fc-StI">
@@ -51,13 +51,20 @@
                                     </barButtonItem>
                                     <barButtonItem id="3Us-JD-jvl">
                                         <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="UgH-xH-a13">
-                                            <rect key="frame" x="967" y="3" width="125" height="44"/>
+                                            <rect key="frame" x="606" y="3" width="125" height="44"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                             <state key="normal" title="Start"/>
                                             <connections>
                                                 <action selector="start:" destination="cqy-fU-39X" eventType="touchUpInside" id="d47-50-Dot"/>
                                             </connections>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" id="373-eC-Hp7">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="SYp-sv-kmd">
+                                            <rect key="frame" x="731" y="10" width="83" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Game Mode"/>
                                         </button>
                                     </barButtonItem>
                                 </items>
@@ -78,14 +85,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BY8-5y-oZv"/>
                     </view>
-                    <toolbarItems>
-                        <barButtonItem id="HVI-Dj-yHL">
-                            <stepper key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="4" minimumValue="2" maximumValue="10" id="UIv-CO-Fgb">
-                                <rect key="frame" x="20" y="10.5" width="94" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </stepper>
-                        </barButtonItem>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="lblMoves" destination="rya-Sf-Y76" id="Stb-w9-LzH"/>

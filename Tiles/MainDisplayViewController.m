@@ -18,8 +18,18 @@
 }
 - (void)viewDidLoad {
     
+    
+    UIImagePickerController *photoPicker = [[UIImagePickerController alloc] init];
+    photoPicker.delegate = self;
+    photoPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+   
+    photoPicker.allowsEditing = NO;
+    
+    [self presentViewController:photoPicker animated:YES completion:nil];
+    
     [self setGameMode];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"darkWood.jpg"]];
+   
    
    
     
@@ -29,7 +39,7 @@
 }
 
 -(void)setGameMode {
-    NSInteger gameMode = 3;
+    NSInteger gameMode = 2;
     _stepperGrid.value = 4;
     _stepperGrid.maximumValue = 10;
     _stepperGrid.minimumValue = 2;
@@ -40,7 +50,7 @@
 }
 
 -(void)createTilesByMode: (NSInteger) gameMode columns: (NSInteger) columns{
-    gameMode = 1;
+    gameMode = 3;
     _screenWidth = [UIScreen mainScreen].bounds.size.width;
     _screenHeight = [UIScreen mainScreen].bounds.size.height;
     
@@ -78,16 +88,16 @@
             if (row != _freeSpaceRow || column !=_freeSpaceColumn){
                 label = [NSString stringWithFormat:@"%li",(x*_columns)+y+1];
                 index = [[NSString stringWithFormat:@"%i%i", x+1,y+1]  integerValue];
-                _testTile = [[Tiles alloc] init];
+                _tile = [[Tiles alloc] init];
                
                //NSLog(@"The game mode is %li",gameMode);
                 switch (gameMode) {
                     case 1:
                         tileBackground = [UIColor blueColor];
-                         [_testTile TileButton:tileBackground xPosition:xPosition yPosition:yPosition width:_width height:_height tag:index label:label row:row column:column];
+                         [_tile TileButton:tileBackground xPosition:xPosition yPosition:yPosition width:_width height:_height tag:index label:label row:row column:column gameMode:gameMode numberColumns:columns imageName:_imageName];
                         break;
-                    case 2:
-                       // NSLog(@"This is index %li",index);
+                    case 2://Colors
+                       
                         if (index %2 ) {
                             tileBackground = [UIColor greenColor];
                         }
@@ -95,21 +105,21 @@
                            tileBackground = [UIColor redColor];
                         }
                        
-                          [_testTile TileButton:tileBackground xPosition:xPosition yPosition:yPosition width:_width height:_height tag:index label:@"" row:row column:column];
-                        break;
-                    case 3:
                         
+                        break;
+                    case 3://Photos
+                         _imageName = @"faces.jpg";
+                        NSLog(@"The mainDisplay image name is %@",_imageName);
+                        [_tile TileButton:tileBackground xPosition:xPosition yPosition:yPosition width:_width height:_height tag:index label:@"" row:row column:column gameMode:gameMode numberColumns:columns imageName:_imageName];
                         break;
                     default:
                         break;
                 }
                
               
-                
-                
-                [self.view addSubview:_testTile];
-                [_arrButtons addObject:_testTile];
-                [_testTile addTarget:self action:@selector(adjustButtons:) forControlEvents:UIControlEventTouchDown];
+                [self.view addSubview:_tile];
+               [_arrButtons addObject:_tile];
+                [_tile addTarget:self action:@selector(adjustButtons:) forControlEvents:UIControlEventTouchDown];
             }
         }
     }

@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "clipImage.h"
+#import "ClipImage.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Tiles : UIButton
 
 
--(Tiles *)TileButton: (UIColor *)backcolor xPosition:(float)xPosition yPosition: (float)yPosition width: (float)width height: (float) height tag: (NSInteger) tag label: (NSString *)label row:(NSInteger)row column:(NSInteger)column;
+-(Tiles *)TileButton: (UIColor *)backcolor xPosition:(float)xPosition yPosition: (float)yPosition width: (float)width height: (float) height tag: (NSInteger) tag label: (NSString *)label row:(NSInteger)row column:(NSInteger)column gameMode:(NSInteger)gameMode numberColumns: (NSInteger)numberColumns imageName: (NSString *)imageName;
 
 @property NSInteger column;
 @property NSInteger row;
