@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) IBOutlet UIButton *btnChooseImage;
 - (IBAction)btnChooseImagePressed:(id)sender;
 
+//test
+
 @property (strong,nonatomic) NSMutableArray * arrayGameModes;
 
 @property (strong, nonatomic) IBOutlet UIPickerView *pickerGameMode;

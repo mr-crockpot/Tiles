@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ClipImage : UIImage
 
-+(UIImage *)cropImage: (UIImage *)imageToUse xPosition: (float)xPos yPosition:(float)yPos width: (float)width height: (float)height imageName:(NSString*)imageName;
++(UIImage *)cropImage: (UIImage *)imageSelected xPosition: (float)xPos yPosition:(float)yPos width: (float)width height: (float)height orientation:(NSInteger)orientation;
 
 @end
 

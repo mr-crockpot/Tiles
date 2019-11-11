@@ -14,7 +14,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MainDisplayViewController : UIViewController
-    <UIPickerViewDelegate, UIPickerViewDelegate, UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+    <UIPickerViewDelegate, UIPickerViewDelegate >
 
 @property NavBarLabels *navLblTimer;
 
@@ -48,13 +48,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property float screenWidth;
 @property float screenHeight;
 
-
+@property NSInteger gameMode;
 @property NSInteger columns;
 
 
 @property NSInteger freeSpaceRow;
 @property NSInteger freeSpaceColumn;
 - (IBAction)btnStart:(id)sender;
+
+@property UIImage* imageSelected;
+
 
 
 
